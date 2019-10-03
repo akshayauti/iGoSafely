@@ -22,20 +22,20 @@ public class Verify extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_verify);
 		// Show the Up button in the action bar.
-		setupActionBar();
-		
-		
-		
+//		setupActionBar();
+
+
+
 	}
-	
-	
+
+
 	public void verify_no(View v) {
 		EditText source_no = (EditText) this.findViewById(R.id.editText1);
 		String str_source_no=source_no.getText().toString();
 		SQLiteDatabase db;
 		db=openOrCreateDatabase("NumDB", Context.MODE_PRIVATE, null);
-	//	if(source_no.getText()!=null){
-		
+		//	if(source_no.getText()!=null){
+
 		db.execSQL("CREATE TABLE IF NOT EXISTS source(number VARCHAR);");
 		db.execSQL("INSERT INTO source VALUES('"+str_source_no+"');");
 		Toast.makeText(getApplicationContext(), str_source_no+" Successfully Saved", Toast.LENGTH_SHORT).show();
@@ -44,14 +44,14 @@ public class Verify extends Activity {
 //		}
 //		else{
 //			Toast.makeText(getApplicationContext(), "Enter Your Number.",Toast.LENGTH_SHORT).show();
-	//	}
+		//	}
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 
 	/**
 	 * Set up the {@link android.app.ActionBar}, if the API is available.
@@ -73,25 +73,25 @@ public class Verify extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
-			NavUtils.navigateUpFromSameTask(this);
-			return true;
+			case android.R.id.home:
+				// This ID represents the Home or Up button. In the case of this
+				// activity, the Up button is shown. Use NavUtils to allow users
+				// to navigate up one level in the application structure. For
+				// more details, see the Navigation pattern on Android Design:
+				//
+				// http://developer.android.com/design/patterns/navigation.html#up-vs-back
+				//
+				NavUtils.navigateUpFromSameTask(this);
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	
+
+
 	public void back(View v) {
 		Intent i_back=new Intent(Verify.this,MainActivity.class);
 		startActivity(i_back);
-			
-		}
+
+	}
 
 }

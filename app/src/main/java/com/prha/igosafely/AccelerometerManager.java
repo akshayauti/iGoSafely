@@ -92,7 +92,7 @@ public class AccelerometerManager {
      * @param accelerometerListener
      *             callback for accelerometer events
      */
-    public static void startListening( AccelerometerListener accelerometerListener )
+    public static void startListening( AccelerometerListener accelerometerListener)
     {
          
         sensorManager = (SensorManager) aContext.

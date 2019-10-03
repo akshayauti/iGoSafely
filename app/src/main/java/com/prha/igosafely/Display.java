@@ -1,6 +1,5 @@
 package com.prha.igosafely;
 
-
 import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -30,11 +29,13 @@ public class Display extends Activity {
 		       return;
 		   }
 		   StringBuffer buffer=new StringBuffer();
-		   while(c.moveToNext())
-		   {
-		       buffer.append("Name: "+c.getString(0)+"\n");
-		       buffer.append("Number: "+c.getString(1)+"\n");
-		   }
+			if (c.moveToFirst()) {
+				do {
+					buffer.append("Name: " + c.getString(0) + "\n");
+					buffer.append("Number: " + c.getString(1) + "\n");
+				} while (c.moveToNext());
+			}
+
 		   showMessage("Details", buffer.toString());
 		Intent i_startservice=new Intent(Display.this,BgService.class);
 		startService(i_startservice);
@@ -51,16 +52,11 @@ public class Display extends Activity {
         builder.show();
     }
 
-
-	
-	
 	public void back(View v) {
 		Intent i_back=new Intent(Display.this,MainActivity.class);
 		startActivity(i_back);
 		
 		}
-	
-	
 
 }
 

@@ -1,8 +1,5 @@
 package com.prha.igosafely;
 
-
-
-
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
@@ -134,17 +131,17 @@ public class BgService extends Service implements AccelerometerListener{
             		Cursor c1=db.rawQuery("SELECT * FROM SOURCE", null);
                 
                     String source_ph_number=c1.getString(0);
-                      while(c.moveToNext())
-         		   {
-         		      String target_ph_number=c.getString(1);
-         		    
-                     SmsManager smsManager= SmsManager.getDefault();
-                     smsManager.sendTextMessage("+919595839575", "+918121668944", "Please help me. I need help immediately. This is where i am now:"+str_address, null, null);
-                     
-                 	Toast.makeText(getApplicationContext(), "Source:"+source_ph_number+"Target:"+target_ph_number, Toast.LENGTH_SHORT).show();
+                    if(c.moveToFirst())
+                    do {
+						String target_ph_number=c.getString(1);
 
-         		   } 
-                      db.close();
+						SmsManager smsManager= SmsManager.getDefault();
+						smsManager.sendTextMessage("+919595839575", "+918121668944", "Please help me. I need help immediately. This is where i am now:"+str_address, null, null);
+
+						Toast.makeText(getApplicationContext(), "Source:"+source_ph_number+"Target:"+target_ph_number, Toast.LENGTH_SHORT).show();
+					}while (c.moveToNext());
+
+                    db.close();
                 
                     break;
                 default:
