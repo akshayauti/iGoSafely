@@ -13,10 +13,7 @@ import android.widget.Toast;
 public class Register extends Activity {
 	
 	EditText name,number;
-    
-
-
-	@Override
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
@@ -39,36 +36,48 @@ public class Register extends Activity {
 		}
 	
 	public void storeInDB(View v) {
-		Toast.makeText(getApplicationContext(), "save started", Toast.LENGTH_LONG).show();
+//		Toast.makeText(getApplicationContext(), "save started", Toast.LENGTH_LONG).show();
 		name = (EditText) this.findViewById(R.id.editText1);
 		number = (EditText) this.findViewById(R.id.editText2);
 		String str_name=name.getText().toString();
 		String str_number=number.getText().toString();
-		SQLiteDatabase db;
-		db=openOrCreateDatabase("NumDB", Context.MODE_PRIVATE, null);
-		//Toast.makeText(getApplicationContext(), "db created",Toast.LENGTH_LONG).show();
-		
-		db.execSQL("CREATE TABLE IF NOT EXISTS details(id int primary key ,name VARCHAR,number VARCHAR);");
-		//Toast.makeText(getApplicationContext(), "table created",Toast.LENGTH_LONG).show();
-		
-		Cursor c=db.rawQuery("SELECT * FROM details", null);
-		   if(c.getCount()<2)
-		   {
-			   db.execSQL("INSERT INTO details VALUES('"+str_name+"','"+str_number+"');");
-			   Toast.makeText(getApplicationContext(), "Successfully Saved", Toast.LENGTH_SHORT).show();
-		   }
-		   else {
-			   
-			   db.execSQL("INSERT INTO details VALUES('"+str_name+"','"+str_number+"');");
-       		   Toast.makeText(getApplicationContext(), "Maximum Numbers limited reached. Previous numbers are replaced.", Toast.LENGTH_SHORT).show();
-		   }
-		
-		
-		db.close();
+		if(isEmpty(name)){
+			Toast.makeText(getApplicationContext(),"Name Should not be Empty!!",Toast.LENGTH_SHORT).show();
+			name.requestFocus();
+		}
+		else if (isEmpty(number) && number.getText().toString().trim().length() != 10){
+			Toast.makeText(getApplicationContext(),"Number Should not be Empty and it should be 10 digit long!!",Toast.LENGTH_LONG).show();
+			number.requestFocus();
+		}
+		else {
+			SQLiteDatabase db;
+			db = openOrCreateDatabase("NumDB", Context.MODE_PRIVATE, null);
+			//Toast.makeText(getApplicationContext(), "db created",Toast.LENGTH_LONG).show();
+
+			db.execSQL("CREATE TABLE IF NOT EXISTS details(id integer  primary key autoincrement,name VARCHAR ,number VARCHAR );");
+			//Toast.makeText(getApplicationContext(), "table created",Toast.LENGTH_LONG).show();
+
+			Cursor c = db.rawQuery("SELECT * FROM details", null);
+			if (c.getCount() < 2) {
+				db.execSQL("INSERT INTO details VALUES('" + str_name + "','" + str_number + "');");
+				Toast.makeText(getApplicationContext(), "Successfully Saved", Toast.LENGTH_SHORT).show();
+			} else {
+				db.execSQL("DELETE FROM details where id = LAST_INSERT_ID()-1");
+
+				db.execSQL("INSERT INTO details VALUES('" + str_name + "','" + str_number + "');");
+				Toast.makeText(getApplicationContext(), "Maximum Numbers limited reached. Previous numbers are replaced.", Toast.LENGTH_SHORT).show();
+			}
+
+
+			db.close();
+
+		}
 			
 		}
-	
-	
+
+	private boolean isEmpty(EditText myeditText) {
+		return myeditText.getText().toString().trim().length() == 0;
+	}
 	
 
 	
