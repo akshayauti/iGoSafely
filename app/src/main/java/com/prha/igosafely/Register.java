@@ -48,7 +48,7 @@ public class Register extends Activity {
 		db=openOrCreateDatabase("NumDB", Context.MODE_PRIVATE, null);
 		//Toast.makeText(getApplicationContext(), "db created",Toast.LENGTH_LONG).show();
 		
-		db.execSQL("CREATE TABLE IF NOT EXISTS details(name VARCHAR,number VARCHAR);");
+		db.execSQL("CREATE TABLE IF NOT EXISTS details(id int primary key ,name VARCHAR,number VARCHAR);");
 		//Toast.makeText(getApplicationContext(), "table created",Toast.LENGTH_LONG).show();
 		
 		Cursor c=db.rawQuery("SELECT * FROM details", null);
@@ -60,7 +60,7 @@ public class Register extends Activity {
 		   else {
 			   
 			   db.execSQL("INSERT INTO details VALUES('"+str_name+"','"+str_number+"');");
-       		   Toast.makeText(getApplicationContext(), "Maximun Numbers limited reached. Previous numbers are replaced.", Toast.LENGTH_SHORT).show();
+       		   Toast.makeText(getApplicationContext(), "Maximum Numbers limited reached. Previous numbers are replaced.", Toast.LENGTH_SHORT).show();
 		   }
 		
 		

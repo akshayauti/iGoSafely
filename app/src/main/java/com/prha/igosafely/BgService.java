@@ -13,6 +13,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.telephony.SmsManager;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -121,28 +122,32 @@ public class BgService extends Service implements AccelerometerListener{
     		   
             switch (message.what) {
                 case 1:
-                    Bundle bundle = message.getData();
-                    str_address = bundle.getString("address");
-                   // TelephonyManager tmgr=(TelephonyManager)BgService.this.getSystemService(Context.TELEPHONY_SERVICE);
-                  //  String ph_number=tmgr.getLine1Number();
-                	SQLiteDatabase db;
-            		db=openOrCreateDatabase("NumDB", Context.MODE_PRIVATE, null);
-            		Cursor c=db.rawQuery("SELECT * FROM details", null);
-            		Cursor c1=db.rawQuery("SELECT * FROM SOURCE", null);
-                
-                    String source_ph_number=c1.getString(0);
-                    if(c.moveToFirst())
-                    do {
-						String target_ph_number=c.getString(1);
+                	try {
+						Bundle bundle = message.getData();
+						str_address = bundle.getString("address");
+//                    TelephonyManager tmgr=(TelephonyManager)BgService.this.getSystemService(Context.TELEPHONY_SERVICE);
+//                    String ph_number=tmgr.getLine1Number();
+						SQLiteDatabase db;
+						db = openOrCreateDatabase("NumDB", Context.MODE_PRIVATE, null);
+						Cursor c = db.rawQuery("SELECT * FROM details", null);
+						Cursor c1 = db.rawQuery("SELECT * FROM SOURCE", null);
 
-						SmsManager smsManager= SmsManager.getDefault();
-						smsManager.sendTextMessage("+919595839575", "+918121668944", "Please help me. I need help immediately. This is where i am now:"+str_address, null, null);
 
-						Toast.makeText(getApplicationContext(), "Source:"+source_ph_number+"Target:"+target_ph_number, Toast.LENGTH_SHORT).show();
-					}while (c.moveToNext());
+						if (c.moveToFirst())
+							do {
+								String source_ph_number = c1.getString(0);
+								String target_ph_number = c.getString(1);
 
-                    db.close();
-                
+								SmsManager smsManager = SmsManager.getDefault();
+								smsManager.sendTextMessage(target_ph_number, source_ph_number, "Please help me. I need help immediately. This is where i am now:" + str_address, null, null);
+
+								Toast.makeText(getApplicationContext(), "Source:" + source_ph_number + "Target:" + target_ph_number, Toast.LENGTH_SHORT).show();
+							} while (c.moveToNext());
+
+						db.close();
+					}catch (Exception e){
+
+					}
                     break;
                 default:
                 	str_address = null;

@@ -7,6 +7,7 @@ android {
         applicationId "com.prha.igosafely"
         minSdkVersion 23
         targetSdkVersion 29
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -27,4 +28,5 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.android.support:support-annotations:28.0.0'
 }

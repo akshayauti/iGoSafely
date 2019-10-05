@@ -21,19 +21,19 @@ public class MainActivity extends Activity {
 		
 	}
 	
-public void display_no(View v) {
-	Intent i_view=new Intent(MainActivity.this,Display.class);
-	startActivity(i_view);
+	public void display_no(View v) {
+		Intent i_view=new Intent(MainActivity.this,Display.class);
+		startActivity(i_view);
 		
 	}
 
-public void instruct(View v) {
-	Intent i_help=new Intent(MainActivity.this,Instructions.class);
-    startActivity(i_help);
-}
+	public void instruct(View v) {
+		Intent i_help=new Intent(MainActivity.this,Instructions.class);
+    	startActivity(i_help);
+	}
 
-public void verify(View v) {
-	Intent i_verify=new Intent(MainActivity.this,Verify.class);
-    startActivity(i_verify);
-}
+	public void verify(View v) {
+		Intent i_verify=new Intent(MainActivity.this,Verify.class);
+    	startActivity(i_verify);
+	}
 }

@@ -5,6 +5,7 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -21,24 +22,31 @@ public class Display extends Activity {
 		
 		SQLiteDatabase db;
 		db=openOrCreateDatabase("NumDB", Context.MODE_PRIVATE, null);
-		
-		   c=db.rawQuery("SELECT * FROM details", null);
-		   if(c.getCount()==0)
-		   {
-		       showMessage("Error", "No records found.");
-		       return;
-		   }
-		   StringBuffer buffer=new StringBuffer();
-			if (c.moveToFirst()) {
-				do {
-					buffer.append("Name: " + c.getString(0) + "\n");
-					buffer.append("Number: " + c.getString(1) + "\n");
-				} while (c.moveToNext());
-			}
+			try{
+				c=db.rawQuery("SELECT * FROM details", null);
+				if(c.getCount()==0)
+				{
+					showMessage("Error", "No records found.");
+					return;
+				}
+				StringBuffer buffer=new StringBuffer();
+				if (c.moveToFirst()) {
+					do {
+						buffer.append("Name: " + c.getString(0) + "\n");
+						buffer.append("Number: " + c.getString(1) + "\n");
+					} while (c.moveToNext());
+					showMessage("Details", buffer.toString());
+				}
 
-		   showMessage("Details", buffer.toString());
+			}catch (Exception e){
+
+
+			}
 		Intent i_startservice=new Intent(Display.this,BgService.class);
 		startService(i_startservice);
+
+
+
           
 		
 	}
