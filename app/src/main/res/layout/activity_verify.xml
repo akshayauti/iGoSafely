@@ -8,6 +8,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Verify" >
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editText1"
+        android:layout_marginBottom="100dp"
+        android:text="Register Your Number"
+        android:layout_centerInParent="true"
+        android:textSize="30sp"/>
+
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
@@ -34,7 +43,6 @@
 
     <Button
         android:id="@+id/button2"
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
