@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -55,8 +56,25 @@ public class BgService extends Service implements AccelerometerListener{
 	        //stopSelf(msg.arg1);
 	    }
     }
-    
-    
+
+	protected void sendSMS(String Src, String Des) {
+		Log.i("Send SMS", "");
+		Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+
+		smsIntent.setData(Uri.parse("smsto:"));
+		smsIntent.setType("vnd.android-dir/mms-sms");
+		smsIntent.putExtra(Des , Src);
+		smsIntent.putExtra("sms_body"  , "Test ");
+
+		try {
+			startActivity(smsIntent);
+//			finish();
+			Log.i("Finished sending SMS...", "");
+		} catch (android.content.ActivityNotFoundException ex) {
+			Toast.makeText(this,
+					"SMS faild, please try again later.", Toast.LENGTH_SHORT).show();
+		}
+	}
 	@Override
 	public IBinder onBind(Intent arg0) {
 		
@@ -120,7 +138,7 @@ public class BgService extends Service implements AccelerometerListener{
         	Toast.makeText(getApplicationContext(), "geocoderhandler started", Toast.LENGTH_SHORT).show();
 
     		   
-            switch (message.what) {
+            switch (1) {
                 case 1:
                 	try {
 						Bundle bundle = message.getData();
@@ -132,8 +150,6 @@ public class BgService extends Service implements AccelerometerListener{
 						Cursor c = db.rawQuery("SELECT * FROM details", null);
 						Cursor c1 = db.rawQuery("SELECT * FROM SOURCE", null);
 
-
-						if (c.moveToFirst())
 							do {
 								String source_ph_number = c1.getString(0);
 								String target_ph_number = c.getString(1);
@@ -146,6 +162,7 @@ public class BgService extends Service implements AccelerometerListener{
 
 						db.close();
 					}catch (Exception e){
+						Log.d(String.valueOf(message), String.valueOf(e));
 
 					}
                     break;
@@ -205,7 +222,7 @@ public class BgService extends Service implements AccelerometerListener{
 	             
 	        }
 		
-		CharSequence text = "Women Safety App Service Stopped";
+		CharSequence text = "iGoSafely Service Stopped";
 		int duration = Toast.LENGTH_SHORT;
 		Toast toast = Toast.makeText(context, text, duration);
 		toast.show();

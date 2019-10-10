@@ -51,7 +51,11 @@ public class Register extends Activity {
 			name.requestFocus();
 		}
 		else if (isEmpty(number) && number.getText().toString().trim().length() != 10){
-			Toast.makeText(getApplicationContext(),"Number Should not be Empty and it should be 10 digit long!!",Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(),"Number Should not be Empty !!",Toast.LENGTH_LONG).show();
+			number.requestFocus();
+		}
+		else if ( number.getText().toString().trim().length() != 10){
+			Toast.makeText(getApplicationContext(),"Number should be 10 digit long!!",Toast.LENGTH_LONG).show();
 			number.requestFocus();
 		}
 		else {

@@ -55,9 +55,10 @@ public class RGeocoder {
                     if (result != null) {
                         message.what = 1;
                         Bundle bundle = new Bundle();
+                        String add = "http://maps.google.com/maps?q="+latitude+","+longitude;
                         result = "Latitude: " + latitude + " Longitude: " + longitude +
-                                "\n\nAddress:\n" + result;
-                        bundle.putString("address", result);
+                                "\n\nAddress: \n" + add;
+                        bundle.putString("address", add);
                         message.setData(bundle);
                     } else {
                         message.what = 1;

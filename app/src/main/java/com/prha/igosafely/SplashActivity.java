@@ -227,7 +227,7 @@ public class SplashActivity extends AppCompatActivity {
                         startActivityForResult(intent, REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
                         finish();
                     }
-                }, 3000);
+                }, 2000);
             }
 
         }
