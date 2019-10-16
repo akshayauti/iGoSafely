@@ -36,4 +36,9 @@ public class MainActivity extends Activity {
 		Intent i_verify=new Intent(MainActivity.this,Verify.class);
     	startActivity(i_verify);
 	}
+
+//	public void send(View view) {
+//		Intent i_send=new Intent(MainActivity.this,SendSms.class);
+//		startActivity(i_send);
+//	}
 }

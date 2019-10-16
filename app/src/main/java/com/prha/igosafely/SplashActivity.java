@@ -48,26 +48,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         }, 3000);
 
-   /*     Thread background = new Thread() {
-            public void run() {
 
-                try {
-                    // Thread will sleep for 10 seconds
-                    sleep(4*1000);
-
-                    startActivity(new Intent(SplashScreen.this,HomeActivity.class));
-
-
-                    finish();
-
-                } catch (Exception e) {
-
-                }
-            }
-        };
-
-        // start thread
-        background.start();*/
     }
 
 
@@ -186,7 +167,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 //Displaying a toast
                 Toast.makeText(this, "Permission granted", Toast.LENGTH_LONG).show();
-            } else {
+            }else {
                 //Displaying another toast if permission is not granted
                 Toast.makeText(this, "Permission Needed To Run The App", Toast.LENGTH_LONG).show();
             }
@@ -227,7 +208,7 @@ public class SplashActivity extends AppCompatActivity {
                         startActivityForResult(intent, REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
                         finish();
                     }
-                }, 2000);
+                }, 1000);
             }
 
         }
@@ -240,7 +221,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 try {
                     // Thread will sleep for 10 seconds
-                    sleep(4*1000);
+                    sleep(2*1000);
 
                     startActivity(new Intent(getApplicationContext(),MainActivity.class));
                     finish();

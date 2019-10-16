@@ -14,7 +14,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.telephony.SmsManager;
-import android.telephony.TelephonyManager;
+//import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -39,42 +39,11 @@ public class BgService extends Service implements AccelerometerListener{
 	    @Override
 	    public void handleMessage(Message msg) {
 
-	    	// REPLACE THIS CODE WITH YOUR APP CODE
-            // Wait before Toasting Service Message  
-	    	// to give the Service Started message time to display.	    	
-    	   
-	        // Toast Service Message.
-	/*  		Context context = getApplicationContext();
-			CharSequence text = "Service Message";
-			int duration = Toast.LENGTH_LONG;
-			Toast toast = Toast.makeText(context, text, duration);
-			toast.show();
-	*/
-			      
-	        // Service can stop itself using the stopSelf() method.
-			// Not using in this app.  Example statement shown below.
-	        //stopSelf(msg.arg1);
+
 	    }
     }
 
-	protected void sendSMS(String Src, String Des) {
-		Log.i("Send SMS", "");
-		Intent smsIntent = new Intent(Intent.ACTION_VIEW);
 
-		smsIntent.setData(Uri.parse("smsto:"));
-		smsIntent.setType("vnd.android-dir/mms-sms");
-		smsIntent.putExtra(Des , Src);
-		smsIntent.putExtra("sms_body"  , "Test ");
-
-		try {
-			startActivity(smsIntent);
-//			finish();
-			Log.i("Finished sending SMS...", "");
-		} catch (android.content.ActivityNotFoundException ex) {
-			Toast.makeText(this,
-					"SMS faild, please try again later.", Toast.LENGTH_SHORT).show();
-		}
-	}
 	@Override
 	public IBinder onBind(Intent arg0) {
 		
@@ -113,19 +82,7 @@ public class BgService extends Service implements AccelerometerListener{
 	    // Send message to start job.
 	    mServiceHandler.sendMessage(msg);		
 		
-	    // Toast Service Started message.
-	//	Context context = getApplicationContext();
-		
-		
-		
-		
-	/*	CharSequence text = "Service Started";
-		int duration = Toast.LENGTH_SHORT;
-		Toast toast = Toast.makeText(context, text, duration);
-		toast.show();	
-    */
 
-		// Start a sticky.
 		return START_STICKY;
 	}	
 	
@@ -138,11 +95,12 @@ public class BgService extends Service implements AccelerometerListener{
         	Toast.makeText(getApplicationContext(), "geocoderhandler started", Toast.LENGTH_SHORT).show();
 
     		   
-            switch (1) {
+            switch (message.what) {
                 case 1:
                 	try {
 						Bundle bundle = message.getData();
 						str_address = bundle.getString("address");
+						String msg = "Please help me. I need help immediately"+ str_address;
 //                    TelephonyManager tmgr=(TelephonyManager)BgService.this.getSystemService(Context.TELEPHONY_SERVICE);
 //                    String ph_number=tmgr.getLine1Number();
 						SQLiteDatabase db;
@@ -154,11 +112,21 @@ public class BgService extends Service implements AccelerometerListener{
 								String source_ph_number = c1.getString(0);
 								String target_ph_number = c.getString(1);
 
-								SmsManager smsManager = SmsManager.getDefault();
-								smsManager.sendTextMessage(target_ph_number, source_ph_number, "Please help me. I need help immediately. This is where i am now:" + str_address, null, null);
+								sendSMS(target_ph_number,message);
 
-								Toast.makeText(getApplicationContext(), "Source:" + source_ph_number + "Target:" + target_ph_number, Toast.LENGTH_SHORT).show();
+//								SmsManager smsManager = SmsManager.getDefault();
+//								smsManager.sendTextMessage(target_ph_number, source_ph_number, "Please help me. I need help immediately. This is where i am now:" + str_address, null, null);
+//								try{
+//									SmsManager smgr = SmsManager.getDefault();
+//									smgr.sendTextMessage(source_ph_number,null,msg,null,null);
+//									Toast.makeText(BgService.this, "SMS Sent Successfully", Toast.LENGTH_SHORT).show();
+//								}
+//								catch (Exception e){
+//									Toast.makeText(BgService.this, "SMS Failed to Send, Please try again", Toast.LENGTH_SHORT).show();
+//								}
+//								Toast.makeText(getApplicationContext(), "Source:" + source_ph_number + "Target:" + target_ph_number, Toast.LENGTH_SHORT).show();
 							} while (c.moveToNext());
+
 
 						db.close();
 					}catch (Exception e){
@@ -194,6 +162,7 @@ public class BgService extends Service implements AccelerometerListener{
         	RGeocoder RGeocoder = new RGeocoder();
         	RGeocoder.getAddressFromLocation(latitude, longitude,getApplicationContext(), new GeocoderHandler());
         	Toast.makeText(getApplicationContext(), "onShake", Toast.LENGTH_SHORT).show();
+        	return;
 
         }
         else{
@@ -201,12 +170,34 @@ public class BgService extends Service implements AccelerometerListener{
 		}   
 		
 	}
-	
-	
-	
-	
-	
-	// onDestroy method.   Display toast that service has stopped.
+
+
+    protected void sendSMS(String src, Message message) {
+
+        Bundle bundle = message.getData();
+        str_address = bundle.getString("address");
+        String msg = "Please help me. I need help immediately"+ str_address;
+        Log.i("Send SMS", "");
+        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+
+        smsIntent.setData(Uri.parse("smsto:"));
+        smsIntent.setType("vnd.android-dir/mms-sms");
+        smsIntent.putExtra("address"  , new String (src));
+        smsIntent.putExtra("sms_body"  , msg);
+
+        try {
+            startActivity(smsIntent);
+//            finish();
+            Log.i("Finished sending SMS...", "");
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this,
+                    "SMS faild, please try again later.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+    // onDestroy method.   Display toast that service has stopped.
 	@Override
 	public void onDestroy() {
 		super.onDestroy();

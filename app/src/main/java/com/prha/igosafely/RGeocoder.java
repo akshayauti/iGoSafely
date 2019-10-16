@@ -13,20 +13,20 @@ import java.util.List;
 import java.util.Locale;
 
 public class RGeocoder {
-	
+
     private static final String TAG = "LocationAddress";
 
-	
-	public void getAddressFromLocation(final double latitude, final double longitude,
+
+    public void getAddressFromLocation(final double latitude, final double longitude,
                                        final Context context, final Handler handler) {
-		
-		Thread thread = new Thread() {
+
+        Thread thread = new Thread() {
             @Override
             public void run() {
                 Geocoder geocoder = new Geocoder(context, Locale.getDefault());
                 String result = null;
                 try {
-                	
+
                     List<Address> addressList = geocoder.getFromLocation(latitude, longitude, 1);
                     if (addressList != null && addressList.size() > 0) {
                         Address address = addressList.get(0);
@@ -38,17 +38,17 @@ public class RGeocoder {
                         sb.append(address.getPostalCode()).append("\n");
                         sb.append(address.getCountryName());
                         result = sb.toString();
-                        
+
 
                     }
-                } 
-                
-                
+                }
+
+
                 catch (IOException e) {
                     Log.e(TAG, "Unable connect to Geocoder", e);
-                } 
-                
-                
+                }
+
+
                 finally {
                     Message message = Message.obtain();
                     message.setTarget(handler);
@@ -63,9 +63,10 @@ public class RGeocoder {
                     } else {
                         message.what = 1;
                         Bundle bundle = new Bundle();
+                        String add = "http://maps.google.com/maps?q="+latitude+","+longitude;
                         result = "Latitude: " + latitude + " Longitude: " + longitude +
-                                "\n Unable to get address for this lat-long.";
-                        bundle.putString("address", result);
+                                "\n\nAddress: \n" + add;
+                        bundle.putString("address", add);
                         message.setData(bundle);
                     }
                     message.sendToTarget();
@@ -73,9 +74,9 @@ public class RGeocoder {
             }
         };
         thread.start();
-    
-	
-	
 
-	}
+
+
+
+    }
 }

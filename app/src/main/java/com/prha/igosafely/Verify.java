@@ -4,9 +4,11 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,15 +34,34 @@ public class Verify extends Activity {
 	public void verify_no(View v) {
 		EditText source_no = (EditText) this.findViewById(R.id.editText1);
 		String str_source_no=source_no.getText().toString();
-		SQLiteDatabase db;
-		db=openOrCreateDatabase("NumDB", Context.MODE_PRIVATE, null);
-		//	if(source_no.getText()!=null){
+		if ( str_source_no.toString().trim().length() == 0){
+			Toast.makeText(getApplicationContext(),"Number cannote be empty!!",Toast.LENGTH_LONG).show();
+			source_no.requestFocus();
+		}
+		 else if ( str_source_no.toString().trim().length() != 10){
+			Toast.makeText(getApplicationContext(),"Number should be 10 digit long!!",Toast.LENGTH_LONG).show();
+			source_no.requestFocus();
+		}
+		 else {
+			SQLiteDatabase db;
+			db = openOrCreateDatabase("NumDB", Context.MODE_PRIVATE, null);
+			//	if(source_no.getText()!=null){
 
-		db.execSQL("CREATE TABLE IF NOT EXISTS source(number VARCHAR);");
-		db.execSQL("INSERT INTO source VALUES('"+str_source_no+"');");
-		Toast.makeText(getApplicationContext(), str_source_no+" Successfully Saved", Toast.LENGTH_SHORT).show();
-		db.close();
-		back(v);
+
+
+			db.execSQL("CREATE TABLE IF NOT EXISTS source(number VARCHAR);");
+			try{
+				db.execSQL("DELETE FROM source");
+
+			}catch (Exception e){
+				Log.e("DELETE", "verify_no: Unable to delete",e );
+			}
+
+			db.execSQL("INSERT INTO source VALUES('" + str_source_no + "');");
+			Toast.makeText(getApplicationContext(), str_source_no + " Successfully Saved", Toast.LENGTH_SHORT).show();
+			db.close();
+			back(v);
+		}
 //		}
 //		else{
 //			Toast.makeText(getApplicationContext(), "Enter Your Number.",Toast.LENGTH_SHORT).show();
