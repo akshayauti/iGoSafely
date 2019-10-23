@@ -55,21 +55,6 @@ public class SendSms extends AppCompatActivity implements LocationListener {
             c=db.rawQuery("SELECT * FROM details", null);
             if(c.getCount()==0)
             {
-                 AlertDialog.Builder detect = new AlertDialog.Builder(SendSms.this);
-                    detect.setMessage("Add atleast one emergency contact to continue.").setPositiveButton("OK", new DialogInterface.OnClickListener(){
-
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.cancel();
-                            Intent in = new Intent(SendSms.this,Register.class);
-                            startActivity(in);
-                        }
-                    });
-                    detect.setCancelable(false);
-                    AlertDialog alert=detect.create();
-                    alert.show();
-
-
 
                 return;
             }
@@ -101,7 +86,8 @@ public class SendSms extends AppCompatActivity implements LocationListener {
             @Override
             public void onClick(View v) {
                 getLocation();
-                try{
+                if (EmContacts.size() != 0) {
+                    try {
 //                    SmsManager smgr = SmsManager.getDefault();
 //                    smgr.sendTextMessage(EmContacts.get(0),null,Msg,null,null);
 //                    Toast.makeText(SendSms.this, "SMS Sent Successfully", Toast.LENGTH_SHORT).show();
@@ -110,29 +96,52 @@ public class SendSms extends AppCompatActivity implements LocationListener {
 //                        smgr1.sendTextMessage(EmContacts.get(1), null, Msg, null, null);
 //                        Toast.makeText(SendSms.this, "SMS Sent Successfully", Toast.LENGTH_SHORT).show();
 //                    }
-                    if(EmContacts.get(1)!=null) {
-                        Intent i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse("smsto:"));
-                        i.setType("vnd.android-dir/mms-sms");
-                        i.putExtra("address", EmContacts.get(0)+";"+EmContacts.get(1));
-                        i.putExtra("sms_body", Msg);
-                        startActivity(Intent.createChooser(i, "Send sms via:"));
-                    }
-                    else{
-                        Intent i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse("smsto:"));
-                        i.setType("vnd.android-dir/mms-sms");
-                        i.putExtra("address", EmContacts.get(0));
-                        i.putExtra("sms_body", Msg);
-                        startActivity(Intent.createChooser(i, "Send sms via:"));
+                        if (EmContacts.size() == 2) {
+                            Intent i = new Intent(Intent.ACTION_VIEW);
+                            i.setData(Uri.parse("smsto:"));
+                            i.setType("vnd.android-dir/mms-sms");
+                            i.putExtra("address", EmContacts.get(0) + ";" + EmContacts.get(1));
+                            i.putExtra("sms_body", Msg);
+                            startActivity(Intent.createChooser(i, "Send sms via:"));
+                        }
+                        if (EmContacts.size() == 1) {
+                            Intent i = new Intent(Intent.ACTION_VIEW);
+                            i.setData(Uri.parse("smsto:"));
+                            i.setType("vnd.android-dir/mms-sms");
+                            i.putExtra("address", EmContacts.get(0));
+                            i.putExtra("sms_body", Msg);
+                            startActivity(Intent.createChooser(i, "Send sms via:"));
 
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(SendSms.this, "SMS Failed to Send, Please try again" + e.toString(), Toast.LENGTH_SHORT).show();
+                        Log.d("msg", e.toString());
                     }
                 }
-                catch (Exception e){
-                    Toast.makeText(SendSms.this, "SMS Failed to Send, Please try again"+e.toString(), Toast.LENGTH_SHORT).show();
-                    Log.d("msg", e.toString());
+                else{
+                    try{
+                      AlertDialog.Builder detect = new AlertDialog.Builder(SendSms.this);
+                        detect.setMessage("Add atleast one emergency contact to continue.").setPositiveButton("OK", new DialogInterface.OnClickListener(){
+
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                                Intent in = new Intent(SendSms.this,Register.class);
+                                startActivity(in);
+                            }
+                        });
+                        detect.setCancelable(false);
+                        AlertDialog alert=detect.create();
+                        alert.show();
+                            return;
+
+                    }catch (Exception e){
+                        Log.d("db",e.toString());
+                    }
+
                 }
             }
+
         });
     }
 
