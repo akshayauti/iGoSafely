@@ -42,8 +42,8 @@ public class Display extends Activity {
 
 
 			}
-		Intent i_startservice=new Intent(Display.this,BgService.class);
-		startService(i_startservice);
+//		Intent i_startservice=new Intent(Display.this,BgService.class);
+//		startService(i_startservice);
 
 
 

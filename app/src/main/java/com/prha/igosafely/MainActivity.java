@@ -36,9 +36,15 @@ public class MainActivity extends Activity {
 		Intent i_verify=new Intent(MainActivity.this,Verify.class);
     	startActivity(i_verify);
 	}
+	public void locateMe(View v) {
+		Intent i_locateMe=new Intent(MainActivity.this,MapsActivity.class);
+		startActivity(i_locateMe);
+	}
 
-//	public void send(View view) {
-//		Intent i_send=new Intent(MainActivity.this,SendSms.class);
-//		startActivity(i_send);
-//	}
+    public void Emergency(View view) {
+		Intent i_sendSms=new Intent(MainActivity.this,SendSms.class);
+		startActivity(i_sendSms);
+
+    }
+
 }

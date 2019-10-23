@@ -10,15 +10,30 @@
     tools:context=".Display" >
     
     
-    
-        <TextView
+
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        
-        android:text="Shake your phone to TEST." />
-    
-    
+        android:layout_marginTop="16dp"
+        android:text="INSTRUCTIONS"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+
+    <TextView
+        android:id="@+id/help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="15dp"
+        android:text="@string/help" />
+
+
+
 
     <Button
         android:id="@+id/button1"
