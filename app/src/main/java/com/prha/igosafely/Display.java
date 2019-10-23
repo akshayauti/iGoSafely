@@ -3,12 +3,15 @@ package com.prha.igosafely;
 import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AlertDialog;
 
 public class Display extends Activity {
 	
@@ -27,7 +30,22 @@ public class Display extends Activity {
 				if(c.getCount()==0)
 				{
 					showMessage("Error", "No records found.");
+
+					AlertDialog.Builder detect = new AlertDialog.Builder(Display.this);
+					detect.setMessage("Add atleast one emergency contact to continue.").setPositiveButton("OK", new DialogInterface.OnClickListener(){
+
+						@Override
+						public void onClick(DialogInterface dialogInterface, int i) {
+							dialogInterface.cancel();
+							Intent in = new Intent(Display.this,Register.class);
+							startActivity(in);
+						}
+					});
+					detect.setCancelable(false);
+					AlertDialog alert=detect.create();
+					alert.show();
 					return;
+
 				}
 				StringBuffer buffer=new StringBuffer();
 				if (c.moveToFirst()) {
