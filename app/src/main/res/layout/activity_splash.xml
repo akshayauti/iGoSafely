@@ -5,13 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashActivity">
+    android:background="@drawable/help_image"
+tools:context=".SplashActivity">
 
     <TextView
         android:id="@+id/welcomemsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Women Safety App"
+        android:textColor="#D11E1E"
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"

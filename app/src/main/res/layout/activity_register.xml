@@ -9,7 +9,22 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/help_image"
     tools:context=".Register" >
+
+    <TextView
+        android:id="@+id/R_title"
+        android:layout_width="362dp"
+        android:layout_height="82dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="34dp"
+        android:gravity="center"
+        android:text="Register your Guardian Number"
+        android:textColor="#000"
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView1"
@@ -17,25 +32,30 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="64dp"
-        android:text="Name:" />
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="194dp"
+        android:text="Name:"
+        android:textColor="#101111"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/textView1"
-        android:layout_marginTop="71dp"
-        android:text="Number:" />
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_marginLeft="-4dp"
+        android:layout_marginTop="59dp"
+        android:text="Number:"
+        android:textColor="#101111"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="60dp"
         android:onClick="storeInDB"
         android:text="Save" />
 
@@ -44,11 +64,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
         android:layout_alignRight="@+id/button1"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="64dp"
         android:ems="10"
         android:hint="Mobile Number"
-        android:inputType="phone" />
+        android:inputType="phone"
+        android:textColor="#000"
+        android:textColorHint="#3D3C3C" />
 
     <EditText
         android:id="@+id/editText1"
@@ -59,8 +83,9 @@
         android:layout_alignLeft="@+id/editText2"
         android:ems="10"
         android:hint="Person Name"
-        android:inputType="textPersonName" >
-
+        android:inputType="textPersonName"
+        android:textColorHint="#3D3C3C"
+        android:textColor="#000">
         <requestFocus />
     </EditText>
 
@@ -73,7 +98,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="21dp"
         android:onClick="instructions"
-        android:text="Instructions" />
+        android:text="Instructions"
+        />
 
     <Button
         android:id="@+id/button3"
@@ -83,6 +109,7 @@
         android:layout_alignRight="@+id/button1"
         android:layout_alignTop="@+id/button2"
         android:onClick="display"
-        android:text="View Registered" />
+        android:text="View Registered"
+        />
 
 </RelativeLayout>

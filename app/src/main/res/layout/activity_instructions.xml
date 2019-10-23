@@ -7,7 +7,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Instructions" >
+    tools:context=".Instructions"
+    android:background="@drawable/help_image">
+
 
     <TextView
         android:id="@+id/textView1"
@@ -17,6 +19,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:text="INSTRUCTIONS"
+        android:textColor="#000"
+        android:textStyle="bold"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
@@ -27,7 +31,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="34dp"
         android:onClick="back"
-        android:text="Main Menu" />
+        android:text="Main Menu"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/help"
@@ -36,6 +41,7 @@
         android:layout_alignLeft="@+id/button1"
         android:layout_below="@+id/textView1"
         android:layout_marginTop="15dp"
-        android:text="@string/help" />
+        android:text="@string/help"
+        android:textColor="#000"/>
 
 </RelativeLayout>
